@@ -4,6 +4,7 @@ import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import { userActions } from '../actions';
+import CircularProgress from '@material-ui/core/CircularProgress'
 
 class LoginPage extends Component {
     constructor(props) {
@@ -41,8 +42,7 @@ class LoginPage extends Component {
 
     render() {
         const { username, password, submitted } = this.state;
-        const { message, type, loggedIn } = this.props
-        console.log('state', this.state)
+        const { message, type, loggedIn, loggingIn } = this.props
 
         if (loggedIn) return <Redirect to={'/'} />
         return (
@@ -78,6 +78,7 @@ class LoginPage extends Component {
                     </div>
                     <div className="form-group">
                         <button className="btn btn-primary" onClick={e => this.handleSubmit(e)}>Login</button>
+                        { loggingIn && <CircularProgress size={20} color="secondary" />}
                         <Link to={'/register'} className="btn btn-link">Register</Link>
                     </div>
                 </form>
