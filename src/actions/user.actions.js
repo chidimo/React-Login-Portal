@@ -36,12 +36,12 @@ function login(user) {
 function logout() {
     // complete this function
     const logout_user = () => ({ type: userConstants.LOGOUT })
-
-    return dispatch => {
+    dispatch => {
         userService.logout()
         dispatch(alertActions.clear())
         dispatch(logout_user())
     }
+    return logout_user()
 }
 
 function register(user) {
