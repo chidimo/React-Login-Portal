@@ -38,12 +38,9 @@ function logout() {
     const logout_user = () => ({ type: userConstants.LOGOUT })
 
     return dispatch => {
-        return new Promise((resolve, reject) => {
-            userService.logout()
-            dispatch(alertActions.clear())
-            dispatch(logout_user())
-            resolve()
-        })
+        userService.logout()
+        dispatch(alertActions.clear())
+        dispatch(logout_user())
     }
 }
 

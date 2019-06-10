@@ -9,14 +9,10 @@ export class HomePage extends Component {
     _logout = (e) => {
         e.preventDefault()
         this.props.dispatch(userActions.logout())
-            .then(() => { return })
-            .catch(() => { return })
+        this.props.history.push('/')
     }
 
     render() {
-        const { loggedIn } = this.props
-
-        if (!loggedIn) return <Redirect to={'/login'} />
         return (
             <div className="col-md-6 col-md-offset-3">
                 <h2 align="center">Welcome! You have successfully logged in.</h2>
@@ -33,4 +29,4 @@ function mapStateToProps({ authentication }) {
     return { loggedIn }    
 };
 
-export default connect(mapStateToProps)(HomePage)
+export default connect()(HomePage)
