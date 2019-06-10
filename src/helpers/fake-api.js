@@ -18,7 +18,6 @@ export function configureFakeAPI() {
                             id: user.id,
                             username: user.username
                         };
-                        localStorage.setItem('user', JSON.stringify(params));
                         resolve({ ok: true, json: () => responseJson });
                     } else {
                         reject('Username or password is incorrect');
@@ -39,7 +38,6 @@ export function configureFakeAPI() {
 
                     newUser.id = users.length ? Math.max(...users.map(user => user.id)) + 1 : 1;
                     users.push(newUser);
-                    localStorage.setItem('user', JSON.stringify(newUser));
                     localStorage.setItem('users', JSON.stringify(users));
 
                     resolve({ ok: true, json: () => ({}) });

@@ -11,8 +11,8 @@ function login(user) {
         body: JSON.stringify(user)
     };
     // call `/users/authenticate` with requestOptions to authenticate the login process
+    localStorage.setItem('user', JSON.stringify(user));
     return fetch('/users/authenticate', requestOptions).then(handleResponse);
-    
 }
 
 function logout() {
@@ -26,9 +26,9 @@ function register(user) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(user)
     };
+    localStorage.setItem('user', JSON.stringify(user));
     return fetch('/users/register', requestOptions).then(handleResponse);
 }
-
 
 function handleResponse(response) {
     if (!response.ok) {

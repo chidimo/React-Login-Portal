@@ -8,7 +8,6 @@ export class HomePage extends Component {
 
     _logout = (e) => {
         e.preventDefault()
-        console.log("loggin out")
         this.props.dispatch(userActions.logout())
             .then(() => { return })
             .catch(() => { return })
