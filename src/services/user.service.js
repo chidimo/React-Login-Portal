@@ -26,7 +26,6 @@ function register(user) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(user)
     };
-
     return fetch('/users/register', requestOptions).then(handleResponse);
 }
 

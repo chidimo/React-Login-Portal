@@ -38,6 +38,7 @@ export function configureFakeAPI() {
 
                     newUser.id = users.length ? Math.max(...users.map(user => user.id)) + 1 : 1;
                     users.push(newUser);
+                    localStorage.setItem('user', JSON.stringify(newUser));
                     localStorage.setItem('users', JSON.stringify(users));
 
                     resolve({ ok: true, json: () => ({}) });

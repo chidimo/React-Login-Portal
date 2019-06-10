@@ -1,6 +1,6 @@
 import React from 'react';
 import { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import { userActions } from '../actions';
@@ -15,7 +15,8 @@ class RegisterPage extends Component {
                 username: '',
                 password: ''
             },
-            submitted: false
+            submitted: false,
+            registered: false
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -38,18 +39,31 @@ class RegisterPage extends Component {
         this.setState({ submitted: true })
         if (!username || !password) return;
         this.props.dispatch(userActions.register({ username, password }))
-            .then(resp => this.props.history.push('/login'))
-            .catch(err => { return })
+            .then(() => this.setState({ registered: true }))
+            .catch(() => { return })
     }
 
     render() {
-        const { user, submitted } = this.state;
+        const { user, submitted, registered } = this.state;
         const { message, type, registering } = this.props
+        
+        if (registered) return <Redirect push={true} to={'/login'} />
         return (
             <div className="col-md-6 col-md-offset-3">
-                <div className={(type === 'alert-success') ? 'card bg-success' : 'card bg-danger'}>
-                    <p>{message}</p>
-                </div>
+
+                {
+                    (type === 'alert-danger') &&
+                    <div className='alert alert-danger'>
+                        <p>{message}</p>
+                    </div>
+                }
+
+                {
+                    (type === 'alert-success') &&
+                    <div className='alert alert-success'>
+                        <p>{message}</p>
+                    </div>
+                }
 
                 <h2>Register</h2>
                 <form name="form">
