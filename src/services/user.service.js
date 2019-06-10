@@ -4,14 +4,14 @@ export const userService = {
     register
 };
 
-function login(username, password) {
+function login(user) {
     const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, password })
+        body: JSON.stringify(user)
     };
-
     // call `/users/authenticate` with requestOptions to authenticate the login process
+    return fetch('/users/authenticate', requestOptions).then(handleResponse);
     
 }
 

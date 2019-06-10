@@ -1,6 +1,6 @@
 import React from 'react';
 import { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import { userActions } from '../actions';
@@ -22,39 +22,62 @@ class LoginPage extends Component {
     }
 
     handleChange(e) {
+        // handle input change and dispatch register
+        const name = e.target.name;
+        const value = e.target.value;
+        this.setState({ [name]: value })
     }
 
     handleSubmit(e) {
-        
+        // handle button click and dispatch register
+        e.preventDefault()
+        const { username, password } = this.state
+        this.setState({ submitted: true })
+        if (!username || !password) return;
+        this.props.dispatch(userActions.login({ username, password }))
+            .then(() => { return })
+            .catch(() => { return })
     }
 
     render() {
         const { username, password, submitted } = this.state;
-        const { message, type } = this.props
+        const { message, type, loggedIn } = this.props
+        console.log('state', this.state)
+
+        if (loggedIn) return <Redirect push={true} to={'/'} />
         return (
             <div className="col-md-6 col-md-offset-3">
-                <div className={(type === 'alert-success') ? 'bg-success' : 'bg-danger'}>
-                    <p>{message}</p>
-                </div>
+
+                { (type === 'alert-danger') &&
+                    (<div className='alert alert-danger'>
+                        <p>{message}</p>
+                    </div>)
+                }
+
+                { (type === 'alert-success') &&
+                    (<div className='alert alert-success'>
+                        <p>{message}</p>
+                    </div>)
+                }
 
                 <h2>Login</h2>
                 <form name="form">
                     <div className={'form-group' + (submitted && !username ? ' has-error' : '')}>
                         <label htmlFor="username">Username</label>
-                        <input type="text" className="form-control username" name="username" />
+                        <input type="text" className="form-control username" name="username" onChange={e => this.handleChange(e)}/>
                         {submitted && !username &&
                             <div className="help-block">Username is required</div>
                         }
                     </div>
                     <div className={'form-group' + (submitted && !password ? ' has-error' : '')}>
                         <label htmlFor="password">Password</label>
-                        <input type="password" className="form-control" name="password"/>
+                        <input type="password" className="form-control" name="password" onChange={e => this.handleChange(e)}/>
                         {submitted && !password &&
                             <div className="help-block">Password is required</div>
                         }
                     </div>
                     <div className="form-group">
-                        <button className="btn btn-primary">Login</button>
+                        <button className="btn btn-primary" onClick={e => this.handleSubmit(e)}>Login</button>
                         <Link to={'/register'} className="btn btn-link">Register</Link>
                     </div>
                 </form>
@@ -62,9 +85,11 @@ class LoginPage extends Component {
         );
     }
 }
-function mapStateToProps({ alert }) {
+function mapStateToProps({ alert, authentication }) {
     const { type, message } = alert
-    return { 
+    const { loggedIn } = authentication
+    return {
+        loggedIn,
         message,
         type,
     }    

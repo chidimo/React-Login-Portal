@@ -9,12 +9,28 @@ export const userActions = {
     register
 };
 
-function login(username, password) {
+function login(user) {
     // return the promise using fetch which adds to localstorage on resolve
-
     function request(user) { return { type: userConstants.LOGIN_REQUEST, user } }
     function success(user) { return { type: userConstants.LOGIN_SUCCESS, user } }
     function failure(error) { return { type: userConstants.LOGIN_FAILURE, error } }
+
+    return dispatch => {
+        dispatch(request(user))
+        return new Promise((resolve, reject) => {
+            userService.login(user)
+            .then(user => {
+                dispatch(alertActions.success('Login successful!'))
+                dispatch(success(user))
+                resolve()
+            })
+            .catch(error => {
+                dispatch(alertActions.error(error))
+                dispatch(failure(error))
+                reject()
+            })
+        })
+    }
 }
 
 function logout() {
