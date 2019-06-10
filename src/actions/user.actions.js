@@ -36,11 +36,7 @@ function login(user) {
 function logout() {
     // complete this function
     const logout_user = () => ({ type: userConstants.LOGOUT })
-    dispatch => {
-        userService.logout()
-        dispatch(alertActions.clear())
-        dispatch(logout_user())
-    }
+    userService.logout();
     return logout_user()
 }
 

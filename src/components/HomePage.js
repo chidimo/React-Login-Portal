@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
-import { Redirect, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import { connect } from 'react-redux';
 import { userActions } from '../actions';
+import { alertActions } from '../actions/alert.actions';
 
 export class HomePage extends Component {
 
     _logout = (e) => {
         e.preventDefault()
         this.props.dispatch(userActions.logout())
+        this.props.dispatch(alertActions.clear())
         this.props.history.push('/')
     }
 

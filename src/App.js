@@ -20,26 +20,24 @@ export class App extends React.Component {
 
     render() {
         return (
+            <Router history={history}>
               <div className="container">
                   <div className="col-sm-8 col-sm-offset-2">
-                    <Router history={history}>
                         <Switch>
                             <PrivateRoute exact path='/' component={ HomePage } />
                             <Route exact path='/register' component={ RegisterPage } />
                             <Route exact path='/login' component={ LoginPage } />
                             <Route component={ErrorBoundary}/>
                         </Switch>
-                    </Router>
                   </div>
               </div>
+            </Router>
         );
     }
 }
 
 function mapStateToProps({ alert }) {
-    return {
-        alert
-    };
+    return { alert };
 }
 
 export default connect(mapStateToProps)(App)
