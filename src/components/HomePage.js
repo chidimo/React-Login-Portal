@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Redirect } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
 
 import { connect } from 'react-redux';
 import { userActions } from '../actions';
@@ -22,7 +22,7 @@ export class HomePage extends Component {
             <div className="col-md-6 col-md-offset-3">
                 <h2 align="center">Welcome! You have successfully logged in.</h2>
                 <p align="center">
-                    <a onClick={e => this._logout(e)} href="">Logout</a>
+                <Link to={'/login'} onClick={e => this._logout(e)}>Logout</Link>
                 </p>
             </div>
         );
