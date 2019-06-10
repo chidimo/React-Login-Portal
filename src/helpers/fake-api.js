@@ -18,6 +18,7 @@ export function configureFakeAPI() {
                             id: user.id,
                             username: user.username
                         };
+                        localStorage.setItem('user', JSON.stringify(params));
                         resolve({ ok: true, json: () => responseJson });
                     } else {
                         reject('Username or password is incorrect');

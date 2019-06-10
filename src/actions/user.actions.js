@@ -35,6 +35,16 @@ function login(user) {
 
 function logout() {
     // complete this function
+    const logout_user = () => ({ type: userConstants.LOGOUT })
+
+    return dispatch => {
+        return new Promise((resolve, reject) => {
+            userService.logout()
+            dispatch(alertActions.clear())
+            dispatch(logout_user())
+            resolve()
+        })
+    }
 }
 
 function register(user) {

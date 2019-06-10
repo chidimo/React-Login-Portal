@@ -47,7 +47,7 @@ class RegisterPage extends Component {
         const { user, submitted, registered } = this.state;
         const { message, type, registering } = this.props
         
-        if (registered) return <Redirect push={true} to={'/login'} />
+        if (registered) return <Redirect to={'/login'} />
         return (
             <div className="col-md-6 col-md-offset-3">
 

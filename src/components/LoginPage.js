@@ -44,7 +44,7 @@ class LoginPage extends Component {
         const { message, type, loggedIn } = this.props
         console.log('state', this.state)
 
-        if (loggedIn) return <Redirect push={true} to={'/'} />
+        if (loggedIn) return <Redirect to={'/'} />
         return (
             <div className="col-md-6 col-md-offset-3">
 
@@ -85,10 +85,12 @@ class LoginPage extends Component {
         );
     }
 }
+
 function mapStateToProps({ alert, authentication }) {
     const { type, message } = alert
-    const { loggedIn } = authentication
+    const { loggedIn, loggingIn } = authentication
     return {
+        loggingIn,
         loggedIn,
         message,
         type,
