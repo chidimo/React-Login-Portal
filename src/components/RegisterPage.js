@@ -1,6 +1,6 @@
 import React from 'react';
 import { Component } from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import { userActions } from '../actions';
@@ -16,7 +16,6 @@ class RegisterPage extends Component {
                 password: ''
             },
             submitted: false,
-            registered: false
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -39,15 +38,14 @@ class RegisterPage extends Component {
         this.setState({ submitted: true })
         if (!username || !password) return;
         this.props.dispatch(userActions.register({ username, password }))
-            .then(() => this.setState({ registered: true }))
+            .then(() => { this.props.history.push('/login') })
             .catch(() => { return })
     }
 
     render() {
-        const { user, submitted, registered } = this.state;
+        const { user, submitted } = this.state;
         const { message, type, registering } = this.props
         
-        if (registered) return <Redirect to={'/login'} />
         return (
             <div className="col-md-6 col-md-offset-3">
 

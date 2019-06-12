@@ -26,9 +26,9 @@ export class HomePage extends Component {
     }
 }
 
-function mapStateToProps({ authentication }) {
-    const { loggedIn } = authentication
-    return { loggedIn }    
-};
+// function mapStateToProps({ authentication }) {
+//     const { loggedIn } = authentication
+//     return { loggedIn }    
+// };
 
 export default connect()(HomePage)

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Component } from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import { userActions } from '../actions';
@@ -36,15 +36,14 @@ class LoginPage extends Component {
         this.setState({ submitted: true })
         if (!username || !password) return;
         this.props.dispatch(userActions.login({ username, password }))
-            .then(() => { return })
+            .then(() => { this.props.history.push('/') })
             .catch(() => { return })
     }
 
     render() {
         const { username, password, submitted } = this.state;
-        const { message, type, loggedIn, loggingIn } = this.props
+        const { message, type, loggingIn } = this.props
 
-        if (loggedIn) return <Redirect to={'/'} />
         return (
             <div className="col-md-6 col-md-offset-3">
 
@@ -98,5 +97,7 @@ function mapStateToProps({ alert, authentication }) {
     }    
 };
 
+const connectedLoginPage = connect()(LoginPage)
+
 export default connect(mapStateToProps)(LoginPage)
-export { LoginPage as TestLoginPage };
+export { connectedLoginPage as TestLoginPage };
